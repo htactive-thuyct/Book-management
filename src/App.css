@@ -1,0 +1,49 @@
+#page-wrapper {
+  font-size: 15px;
+}
+.container-fluid {
+  margin-top: 50;
+}
+
+#buttonAdd {
+  margin-right: 200px;
+  float: right;
+  height: 40px;
+  width: 60px;
+  font-size: 15px;
+}
+
+.containerTable {
+  height: 1000px;
+  margin-top: 50px;
+}
+.containerTable .table {
+  width: 70%;
+  margin-left: 100px;
+}
+
+.thead {
+  background: #85b4d0;
+}
+
+.formAdd {
+  width: 70%;
+  margin-left: 200px;
+}
+.formAdd .form-group input {
+  height: 50px;
+  font-size: 15px;
+}
+
+.formAdd button {
+  height: 40px;
+  width: 60px;
+}
+
+.fa-trash {
+  color: red;
+}
+
+.fa-pencil {
+  color: #2e64fe;
+}
