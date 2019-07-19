@@ -5,17 +5,11 @@ class FormAddUser extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      //   show: false,
-      data: []
+      data: [],
+      image: "",
+      arrClass: ["PNV20A", "PNV20B", "PNV19A", "PNV19B", "PNV21A", "PNV21B"]
     };
   }
-  //   handleShow = () => {
-  //     this.setState({ show: true });
-  //   };
-
-  //   handleHide = () => {
-  //     this.setState({ show: false });
-  //   };
 
   addUser = () => {
     this.handleUpload();
@@ -27,6 +21,7 @@ class FormAddUser extends React.Component {
       [event.target.name]: event.target.value
     });
   };
+
   handleImage = e => {
     if (e.target.files[0]) {
       const image = e.target.files[0];
@@ -36,6 +31,7 @@ class FormAddUser extends React.Component {
 
   handleUpload = () => {
     const { image } = this.state;
+    console.log("ima", image);
     const uploadTask = this.props.firebase.storage
       .ref(`images/${image.name}`)
       .put(image);
@@ -58,7 +54,7 @@ class FormAddUser extends React.Component {
           .then(url => {
             this.props.addUser({
               ...this.state,
-              img: url
+              image: url
             });
           });
       }
@@ -66,7 +62,7 @@ class FormAddUser extends React.Component {
   };
 
   render() {
-    const { name, age, img, classes, phone } = this.state;
+    const { name, age, image, classes, phone } = this.state;
     //let { show } = this.state;
     return (
       <div id="page-wrapper">
@@ -79,7 +75,7 @@ class FormAddUser extends React.Component {
                 <div className="containerTable">
                   <form onSubmit={this.onSubmit} className="formAdd">
                     <div className="form-group">
-                      <label htmlFor="exampleInputPassword1">Name</label>
+                      <label htmlFor="exampleInputPassword1">NAME</label>
                       <input
                         type="text"
                         className="form-control"
@@ -101,7 +97,7 @@ class FormAddUser extends React.Component {
                       />
                     </div>
                     <div className="form-group">
-                      <label htmlFor="exampleInputPassword1">Phone</label>
+                      <label htmlFor="exampleInputPassword1">PHONE</label>
                       <input
                         type="text"
                         className="form-control"
@@ -111,24 +107,29 @@ class FormAddUser extends React.Component {
                         onChange={this.handleChange}
                       />
                     </div>
+
                     <div className="form-group">
-                      <label htmlFor="exampleInputPassword1">CLASS</label>
-                      <input
-                        type="text"
+                      <label htmlFor="exampleFormControlSelect1">CLASS</label>
+                      <select
                         className="form-control"
-                        placeholder="Enter book's status"
+                        id="exampleFormControlSelect1"
                         name="classes"
                         defaultValue={classes}
                         onChange={this.handleChange}
-                      />
+                      >
+                        {this.state.arrClass.map((item, index) => (
+                          <option key={index}>{item}</option>
+                        ))}
+                      </select>
                     </div>
+
                     <div className="form-group">
-                      <label htmlFor="exampleInputPassword1">Image</label>
+                      <label htmlFor="exampleInputPassword1">IMAGE</label>
                       <input
                         type="file"
                         className="form-control-file"
-                        name="img"
-                        defaultValue={img}
+                        name="image"
+                        defaultValue={image}
                         onChange={this.handleImage}
                       />
                     </div>

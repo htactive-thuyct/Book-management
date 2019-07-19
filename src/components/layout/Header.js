@@ -16,13 +16,7 @@ class Header extends Component {
             {" "}
             <div className="top-left-part">
               <a className="logo" href="/">
-                <span className="hidden-xs">
-                  <img
-                    src={logo}
-                    alt="home"
-                    style={{ width: "100%", height: "60px" }}
-                  />
-                </span>
+                Thuy Thuong
               </a>
             </div>
             <ul className="nav navbar-top-links navbar-left m-l-20 hidden-xs">

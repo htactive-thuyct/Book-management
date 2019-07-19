@@ -9,6 +9,7 @@ import "./App.css";
 
 import ProductList from "./components/products/ProductList";
 import FormAddBook from "./components/products/FormAddBook";
+import FormUpdateBook from "./components/products/FormUpdateBook";
 
 import CategoriesList from "./components/categories/CategoriesList";
 import FormAddCategories from "./components/categories/FormAddCategories";
@@ -66,6 +67,7 @@ class App extends React.Component {
   };
 
   componentDidMount() {
+    console.log(this.props);
     this.getData("categories");
     this.getData("products");
     this.getData("users");
@@ -89,8 +91,8 @@ class App extends React.Component {
   };
 
   addUser = user => {
-    const { name, age, img, classes, phone } = user;
-    this.props.firebase.users().push({ name, age, img, classes, phone });
+    const { name, age, image, classes, phone } = user;
+    this.props.firebase.users().push({ name, age, image, classes, phone });
   };
 
   deleteUser = index => {
@@ -98,20 +100,23 @@ class App extends React.Component {
   };
 
   editUser = (index, data) => {
-    const { name, age, img, classes, phone } = data;
+    // console.log("object", data);
+    const { image, value } = data;
     this.props.firebase.queryUsers(index).set({
-      img: img,
-      name: name,
-      classes: classes,
-      phone: phone,
-      age: age
+      image: image || value.image,
+      name: value.name,
+      classes: value.classes,
+      phone: value.phone,
+      age: value.age
     });
   };
 
   addBook = book => {
     // console.log(book);
-    const { name, type, quantity, status, image } = book;
-    this.props.firebase.books().push({ name, type, quantity, status, image });
+    const { name, type, quantity, quantityRemain, image } = book;
+    this.props.firebase
+      .books()
+      .push({ name, type, quantity, quantityRemain, image });
   };
 
   deleteBook = index => {
@@ -119,8 +124,14 @@ class App extends React.Component {
   };
 
   editBook = (index, data) => {
+    console.log("object", data);
+    const { image, value } = data;
     this.props.firebase.queryBooks(index).set({
-      newUser: data
+      image: image || value.image,
+      name: value.name,
+      type: value.type,
+      quantity: value.quantity,
+      quantityRemain: value.quantityRemain
     });
   };
 
@@ -158,7 +169,20 @@ class App extends React.Component {
 
           <Route
             path="/addBook"
-            component={() => <FormAddBook addBook={this.addBook} />}
+            component={() => (
+              <FormAddBook categories={categories} addBook={this.addBook} />
+            )}
+          />
+          <Route
+            path="/updateBook/:id"
+            component={match => (
+              <FormUpdateBook
+                categories={categories}
+                products={products}
+                editBook={this.editBook}
+                match={match}
+              />
+            )}
           />
           <Route
             path="/updateCategory/:id"
